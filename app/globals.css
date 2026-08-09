@@ -1,8 +1,14 @@
 @import "tailwindcss";
 
+/*
+ * O app tem visual claro em todas as telas. Não usamos
+ * `prefers-color-scheme: dark` aqui de propósito: o tema escuro herdado do
+ * template deixava o texto quase branco sobre os cards brancos, tornando o
+ * conteúdo ilegível em quem usa o sistema no modo escuro.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fafafa; /* zinc-50 */
+  --foreground: #18181b; /* zinc-900 */
 }
 
 @theme inline {
@@ -12,15 +18,8 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
 }
