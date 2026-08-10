@@ -53,7 +53,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Erro ao buscar turmas' }, { status: 500 });
   }
 
-  return NextResponse.json(data);
+  return NextResponse.json(data || []);
 }
 
 export async function POST(req: NextRequest) {
