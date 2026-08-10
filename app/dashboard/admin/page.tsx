@@ -40,7 +40,7 @@ const DAYS = [
 const BELTS = ['branca', 'azul', 'roxa', 'marrom', 'preta'] as const;
 
 interface Academy {
-  _id: string;
+  id: string;
   name: string;
   address: string;
   latitude: number;
@@ -49,14 +49,14 @@ interface Academy {
 }
 
 interface Professor {
-  _id: string;
+  id: string;
   name: string;
   belt: string;
   degree: number;
 }
 
 interface Turma {
-  _id: string;
+  id: string;
   name: string;
   description?: string;
   days: string[];
@@ -70,7 +70,7 @@ interface Turma {
 }
 
 interface Usuario {
-  _id: string;
+  id: string;
   name: string;
   email: string;
   cpf?: string;

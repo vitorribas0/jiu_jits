@@ -17,7 +17,7 @@ import {
 } from './ui';
 
 export interface Foto {
-  _id: string;
+  id: string;
   caption?: string;
   takenAt: string;
   url?: string;
@@ -27,7 +27,7 @@ export interface Foto {
 }
 
 interface TurmaRef {
-  _id: string;
+  id: string;
   name: string;
 }
 

@@ -15,14 +15,14 @@ import {
 } from '@/app/components/ui';
 
 interface Academia {
-  _id: string;
+  id: string;
   name: string;
   address: string;
   checkInRadius: number;
 }
 
 interface Turma {
-  _id: string;
+  id: string;
   name: string;
   description?: string;
   days: string[];

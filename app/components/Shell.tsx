@@ -7,7 +7,7 @@ import { api } from '@/lib/api';
 import { BeltBadge } from './ui';
 
 export interface SessionUser {
-  _id: string;
+  id: string;
   name: string;
   email: string;
   role: 'admin' | 'professor' | 'aluno';

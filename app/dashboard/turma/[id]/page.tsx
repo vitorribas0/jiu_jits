@@ -20,7 +20,7 @@ import {
 } from '@/app/components/ui';
 
 interface Aluno {
-  _id: string;
+  id: string;
   name: string;
   email: string;
   belt: string;
@@ -30,7 +30,7 @@ interface Aluno {
 }
 
 interface Turma {
-  _id: string;
+  id: string;
   name: string;
   description?: string;
   days: string[];

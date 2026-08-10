@@ -22,7 +22,7 @@ import {
 } from '@/app/components/ui';
 
 interface Turma {
-  _id: string;
+  id: string;
   name: string;
   description?: string;
   days: string[];
@@ -35,7 +35,7 @@ interface Turma {
 }
 
 interface Registro {
-  _id: string;
+  id: string;
   checkInTime: string;
   distanceMeters: number;
   status: 'presente' | 'atrasado';

@@ -6,7 +6,7 @@ import { AuthImage, UploadModal, type Foto } from './PhotoGallery';
 import { Alert, BeltBadge, Button, Card, CardHeader } from './ui';
 
 interface Registro {
-  _id: string;
+  id: string;
   checkInTime: string;
   distanceMeters: number;
   status: 'presente' | 'atrasado';

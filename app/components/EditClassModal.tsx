@@ -17,7 +17,7 @@ const DAYS = [
 ] as const;
 
 export interface TurmaEditavel {
-  _id: string;
+  id: string;
   name: string;
   description?: string;
   days: string[];
