@@ -41,15 +41,23 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  const insertData = {
+    name: parsed.data.name,
+    address: parsed.data.address,
+    latitude: parsed.data.latitude,
+    longitude: parsed.data.longitude,
+    check_in_radius: parsed.data.checkInRadius || 150,
+  };
+
   const { data, error } = await db
     .from('academies')
-    .insert([parsed.data])
+    .insert([insertData])
     .select()
     .single();
 
   if (error) {
-    console.error('Erro ao criar academia:', error);
-    return NextResponse.json({ error: 'Erro ao criar academia' }, { status: 500 });
+    console.error('Erro ao criar academia:', error.message);
+    return NextResponse.json({ error: error.message || 'Erro ao criar academia' }, { status: 500 });
   }
 
   return NextResponse.json(data, { status: 201 });
