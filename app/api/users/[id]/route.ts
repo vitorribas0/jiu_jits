@@ -47,10 +47,11 @@ export async function PATCH(req: NextRequest, { params }: Params) {
     );
   }
 
-  const { password, birthDate, ...rest } = parsed.data;
+  const { password, birthDate, emergencyContact, ...rest } = parsed.data;
   const update: Record<string, unknown> = { ...rest, updated_at: new Date().toISOString() };
 
   if (birthDate) update.birth_date = new Date(birthDate).toISOString();
+  if (emergencyContact) update.emergency_contact = emergencyContact;
   if (password) update.password = await bcrypt.hash(password, 10);
   if (parsed.data.belt || parsed.data.degree !== undefined) {
     update.belt_updated_at = new Date().toISOString();
