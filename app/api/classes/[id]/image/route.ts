@@ -87,8 +87,8 @@ export async function POST(req: NextRequest, { params }: Params) {
   }
 
   // Remover imagem anterior
-  if (turma.image?.public_id) {
-    await removeImage(turma.image.public_id);
+  if (turma.image?.publicId) {
+    await removeImage(turma.image.publicId);
   }
 
   const buffer = Buffer.from(await file.arrayBuffer());
@@ -135,8 +135,8 @@ export async function DELETE(req: NextRequest, { params }: Params) {
     );
   }
 
-  if (turma.image?.public_id) {
-    await removeImage(turma.image.public_id);
+  if (turma.image?.publicId) {
+    await removeImage(turma.image.publicId);
   }
 
   await db
