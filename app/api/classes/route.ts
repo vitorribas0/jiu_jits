@@ -53,7 +53,32 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Erro ao buscar turmas' }, { status: 500 });
   }
 
-  return NextResponse.json(data || []);
+  // Buscar students para cada turma
+  const classesWithStudents = await Promise.all(
+    (data || []).map(async (turma: any) => {
+      const { data: enrollments } = await db
+        .from('class_students')
+        .select('student_id')
+        .eq('class_id', turma.id);
+
+      return {
+        ...turma,
+        startTime: turma.start_time,
+        endTime: turma.end_time,
+        maxStudents: turma.max_students,
+        students: (enrollments || []).map((e: any) => e.student_id),
+        // Remove snake_case campos originais
+        start_time: undefined,
+        end_time: undefined,
+        max_students: undefined,
+      };
+    })
+  );
+
+  // Remove undefined fields
+  const cleaned = classesWithStudents.map(({ start_time, end_time, max_students, ...rest }) => rest);
+
+  return NextResponse.json(cleaned);
 }
 
 export async function POST(req: NextRequest) {
@@ -101,5 +126,18 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Erro ao criar turma' }, { status: 500 });
   }
 
-  return NextResponse.json(created, { status: 201 });
+  const result = {
+    ...created,
+    startTime: created.start_time,
+    endTime: created.end_time,
+    maxStudents: created.max_students,
+    students: [],
+    start_time: undefined,
+    end_time: undefined,
+    max_students: undefined,
+  };
+
+  const { start_time, end_time, max_students, ...cleaned } = result;
+
+  return NextResponse.json(cleaned, { status: 201 });
 }

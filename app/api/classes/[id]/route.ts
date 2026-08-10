@@ -200,7 +200,19 @@ export async function PATCH(req: NextRequest, { params }: Params) {
     return NextResponse.json({ error: 'Erro ao atualizar turma' }, { status: 500 });
   }
 
-  return NextResponse.json(updated);
+  const result = {
+    ...updated,
+    startTime: updated.start_time,
+    endTime: updated.end_time,
+    maxStudents: updated.max_students,
+    start_time: undefined,
+    end_time: undefined,
+    max_students: undefined,
+  };
+
+  const { start_time, end_time, max_students, ...cleaned } = result;
+
+  return NextResponse.json(cleaned);
 }
 
 export async function DELETE(req: NextRequest, { params }: Params) {
