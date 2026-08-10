@@ -198,7 +198,7 @@ export default function AdminDashboard() {
       {tab === 'fotos' && (
         <PhotoGallery
           photos={photos}
-          classes={classes.map((c) => ({ _id: c._id, name: c.name }))}
+          classes={classes.map((c) => ({ _id: c.id, name: c.name }))}
           canUpload
           canDelete={() => true}
           onChange={loadAll}
@@ -208,7 +208,7 @@ export default function AdminDashboard() {
       {tab === 'usuarios' && (
         <UsersTab
           users={users}
-          currentUserId={user._id}
+          currentUserId={user.id}
           onDone={(msg) => {
             setFeedback({ kind: 'success', text: msg });
             loadAll();
@@ -380,7 +380,7 @@ function AcademiesTab({
 
     try {
       if (editing) {
-        await api(`/api/academies/${editing._id}`, { method: 'PATCH', body });
+        await api(`/api/academies/${editing.id}`, { method: 'PATCH', body });
         setEditing(null);
         onDone('Academia atualizada!');
       } else {
@@ -404,7 +404,7 @@ function AcademiesTab({
       return;
 
     try {
-      await api(`/api/academies/${a._id}`, { method: 'DELETE' });
+      await api(`/api/academies/${a.id}`, { method: 'DELETE' });
       setEditing(null);
       onDone('Academia desativada.');
     } catch (e) {
@@ -433,12 +433,12 @@ function AcademiesTab({
           <ul className="divide-y divide-zinc-200">
             {academies.map((a) => (
               <li
-                key={a._id}
+                key={a.id}
                 className="flex flex-wrap items-start justify-between gap-4 px-6 py-4"
               >
                 <div className="min-w-0">
                   <Link
-                    href={`/dashboard/academia/${a._id}`}
+                    href={`/dashboard/academia/${a.id}`}
                     className="font-semibold text-zinc-900 transition hover:text-indigo-600"
                   >
                     {a.name}
@@ -451,7 +451,7 @@ function AcademiesTab({
                 </div>
                 <div className="flex items-center gap-1">
                   <Link
-                    href={`/dashboard/academia/${a._id}`}
+                    href={`/dashboard/academia/${a.id}`}
                     className="rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-zinc-800 ring-1 ring-inset ring-zinc-300 transition hover:bg-zinc-50"
                   >
                     Ver turmas
@@ -645,12 +645,12 @@ function ClassesTab({
           <ul className="divide-y divide-zinc-200">
             {classes.map((c) => (
               <li
-                key={c._id}
+                key={c.id}
                 className="flex flex-wrap items-start justify-between gap-4 px-6 py-4"
               >
                 <div className="min-w-0">
                   <Link
-                    href={`/dashboard/turma/${c._id}`}
+                    href={`/dashboard/turma/${c.id}`}
                     className="font-semibold text-zinc-900 transition hover:text-indigo-600"
                   >
                     {c.name}
@@ -670,7 +670,7 @@ function ClassesTab({
                 </div>
                 <div className="flex items-center gap-1">
                   <Link
-                    href={`/dashboard/turma/${c._id}`}
+                    href={`/dashboard/turma/${c.id}`}
                     className="rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-zinc-800 ring-1 ring-inset ring-zinc-300 transition hover:bg-zinc-50"
                   >
                     Ver chamada
@@ -678,7 +678,7 @@ function ClassesTab({
                   <Button variant="secondary" onClick={() => setEditing(c)}>
                     Editar
                   </Button>
-                  <Button variant="ghost" onClick={() => remove(c._id, c.name)}>
+                  <Button variant="ghost" onClick={() => remove(c.id, c.name)}>
                     Remover
                   </Button>
                 </div>
@@ -727,7 +727,7 @@ function ClassesTab({
             >
               <option value="">Selecione…</option>
               {academies.map((a) => (
-                <option key={a._id} value={a._id}>
+                <option key={a.id} value={a.id}>
                   {a.name}
                 </option>
               ))}
@@ -742,7 +742,7 @@ function ClassesTab({
             >
               <option value="">Selecione…</option>
               {professors.map((p) => (
-                <option key={p._id} value={p._id}>
+                <option key={p.id} value={p.id}>
                   {p.name} ({p.belt})
                 </option>
               ))}
@@ -868,7 +868,7 @@ function UsersTab({
 
     setSaving(true);
     try {
-      await api(`/api/users/${editing._id}`, {
+      await api(`/api/users/${editing.id}`, {
         method: 'PATCH',
         body: JSON.stringify({
           name: form.name,
@@ -905,7 +905,7 @@ function UsersTab({
       return;
 
     try {
-      await api(`/api/users/${u._id}`, { method: 'DELETE' });
+      await api(`/api/users/${u.id}`, { method: 'DELETE' });
       setEditing(null);
       onDone(`${u.name} foi desativado.`);
     } catch (e) {
@@ -925,13 +925,13 @@ function UsersTab({
         <ul className="divide-y divide-zinc-200">
           {users.map((u) => (
             <li
-              key={u._id}
+              key={u.id}
               className="flex flex-wrap items-center justify-between gap-4 px-6 py-4"
             >
               <div className="min-w-0">
                 <p className="font-semibold text-zinc-900">
                   {u.name}
-                  {u._id === currentUserId && (
+                  {u.id === currentUserId && (
                     <span className="ml-2 rounded bg-indigo-50 px-1.5 py-0.5 text-xs font-semibold text-indigo-700">
                       você
                     </span>
@@ -1121,7 +1121,7 @@ function UsersTab({
             </Button>
           </div>
 
-          {editing && editing._id !== currentUserId && (
+          {editing && editing.id !== currentUserId && (
             <div className="border-t border-zinc-200 pt-4">
               <Button
                 type="button"

@@ -90,7 +90,7 @@ export function EditClassModal({
 
     setSaving(true);
     try {
-      await api(`/api/classes/${turma._id}`, {
+      await api(`/api/classes/${turma.id}`, {
         method: 'PATCH',
         body: JSON.stringify({
           name: form.name,
@@ -118,7 +118,7 @@ export function EditClassModal({
       const body = new FormData();
       body.append('file', await compressImage(file));
       const res = await apiUpload<{ image: ClassImageRef }>(
-        `/api/classes/${turma._id}/image`,
+        `/api/classes/${turma.id}/image`,
         body
       );
       setImage(res.image);
@@ -136,7 +136,7 @@ export function EditClassModal({
   async function removeImage() {
     if (!turma || !confirm('Remover a imagem desta turma?')) return;
     try {
-      await api(`/api/classes/${turma._id}/image`, { method: 'DELETE' });
+      await api(`/api/classes/${turma.id}/image`, { method: 'DELETE' });
       setImage(null);
       setImageKey((k) => k + 1);
       onRefresh?.();
@@ -157,7 +157,7 @@ export function EditClassModal({
             <div className="flex items-center gap-4">
               <ClassImage
                 key={imageKey}
-                classId={turma._id}
+                classId={turma.id}
                 image={image}
                 name={turma.name}
                 className="h-20 w-20 shrink-0 rounded-lg text-2xl"

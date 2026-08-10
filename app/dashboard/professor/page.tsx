@@ -101,9 +101,9 @@ export default function ProfessorDashboard() {
 
   if (loading || !user) return <LoadingScreen />;
 
-  const myClassIds = new Set(classes.map((c) => c._id));
+  const myClassIds = new Set(classes.map((c) => c.id));
   const myAttendance = attendance.filter(
-    (a) => a.class && myClassIds.has(a.class._id)
+    (a) => a.class && myClassIds.has(a.class.id)
   );
 
   const today = new Date().toDateString();
@@ -209,12 +209,12 @@ export default function ProfessorDashboard() {
             <ul className="divide-y divide-zinc-200">
               {classes.map((c) => (
                 <li
-                  key={c._id}
+                  key={c.id}
                   className="flex flex-wrap items-start justify-between gap-4 px-6 py-4"
                 >
                   <div className="min-w-0">
                     <Link
-                      href={`/dashboard/turma/${c._id}`}
+                      href={`/dashboard/turma/${c.id}`}
                       className="font-semibold text-zinc-900 transition hover:text-indigo-600"
                     >
                       {c.name}
@@ -229,7 +229,7 @@ export default function ProfessorDashboard() {
                   </div>
                   <div className="flex items-center gap-1">
                     <Link
-                      href={`/dashboard/turma/${c._id}`}
+                      href={`/dashboard/turma/${c.id}`}
                       className="rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-zinc-800 ring-1 ring-inset ring-zinc-300 transition hover:bg-zinc-50"
                     >
                       Ver chamada
@@ -237,7 +237,7 @@ export default function ProfessorDashboard() {
                     <Button variant="secondary" onClick={() => setEditing(c)}>
                       Editar
                     </Button>
-                    <Button variant="ghost" onClick={() => removeClass(c._id, c.name)}>
+                    <Button variant="ghost" onClick={() => removeClass(c.id, c.name)}>
                       Remover
                     </Button>
                   </div>
@@ -253,9 +253,9 @@ export default function ProfessorDashboard() {
       <div className="mb-8">
         <PhotoGallery
           photos={photos}
-          classes={classes.map((c) => ({ _id: c._id, name: c.name }))}
+          classes={classes.map((c) => ({ _id: c.id, name: c.name }))}
           canUpload
-          canDelete={(p) => p.uploadedBy?._id === user._id}
+          canDelete={(p) => p.uploadedBy?.id === user.id}
           onChange={load}
         />
       </div>
@@ -279,7 +279,7 @@ export default function ProfessorDashboard() {
           <ul className="divide-y divide-zinc-200">
             {myAttendance.slice(0, 20).map((a) => (
               <li
-                key={a._id}
+                key={a.id}
                 className="flex flex-wrap items-center justify-between gap-3 px-6 py-3"
               >
                 <div className="min-w-0">
@@ -337,7 +337,7 @@ export default function ProfessorDashboard() {
       <NewClassModal
         open={open}
         academies={academies}
-        professorId={user._id}
+        professorId={user.id}
         onClose={() => setOpen(false)}
         onDone={() => {
           setOpen(false);
@@ -448,7 +448,7 @@ function NewClassModal({
           >
             <option value="">Selecione…</option>
             {academies.map((a) => (
-              <option key={a._id} value={a._id}>
+              <option key={a.id} value={a.id}>
                 {a.name}
               </option>
             ))}

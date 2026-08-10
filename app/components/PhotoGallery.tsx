@@ -52,7 +52,7 @@ export function AuthImage({
     let objectUrl: string | null = null;
     let cancelled = false;
 
-    fetchImageUrl(`/api/photos/${photo._id}/file`)
+    fetchImageUrl(`/api/photos/${photo.id}/file`)
       .then((url) => {
         if (cancelled) {
           URL.revokeObjectURL(url);
@@ -67,7 +67,7 @@ export function AuthImage({
       cancelled = true;
       if (objectUrl) URL.revokeObjectURL(objectUrl);
     };
-  }, [photo._id, photo.url]);
+  }, [photo.id, photo.url]);
 
   if (failed) {
     return (
@@ -117,7 +117,7 @@ export function PhotoGallery({
   async function remove(photo: Foto) {
     if (!confirm('Remover esta foto?')) return;
     try {
-      await api(`/api/photos/${photo._id}`, { method: 'DELETE' });
+      await api(`/api/photos/${photo.id}`, { method: 'DELETE' });
       setViewing(null);
       setFeedback({ kind: 'success', text: 'Foto removida.' });
       onChange();
@@ -166,7 +166,7 @@ export function PhotoGallery({
         ) : (
           <ul className="grid grid-cols-2 gap-3 p-6 sm:grid-cols-3 lg:grid-cols-4">
             {photos.map((p) => (
-              <li key={p._id}>
+              <li key={p.id}>
                 <button
                   onClick={() => setViewing(p)}
                   className="group block w-full overflow-hidden rounded-lg ring-1 ring-zinc-200 transition hover:ring-2 hover:ring-indigo-500"
@@ -341,7 +341,7 @@ export function UploadModal({
         {presetClassId && presetDate ? (
           <div className="rounded-lg bg-zinc-50 p-4 text-sm ring-1 ring-zinc-200">
             <p className="font-semibold text-zinc-800">
-              {classes.find((c) => c._id === presetClassId)?.name ?? 'Turma'}
+              {classes.find((c) => c.id === presetClassId)?.name ?? 'Turma'}
             </p>
             <p className="mt-0.5 text-zinc-600">
               Treino de{' '}
@@ -362,7 +362,7 @@ export function UploadModal({
               >
                 <option value="">Selecione…</option>
                 {classes.map((c) => (
-                  <option key={c._id} value={c._id}>
+                  <option key={c.id} value={c.id}>
                     {c.name}
                   </option>
                 ))}

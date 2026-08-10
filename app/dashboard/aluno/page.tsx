@@ -84,18 +84,18 @@ export default function AlunoDashboard() {
 
   if (loading || !user) return <LoadingScreen />;
 
-  const myClasses = classes.filter((c) => c.students.includes(user._id));
-  const otherClasses = classes.filter((c) => !c.students.includes(user._id));
+  const myClasses = classes.filter((c) => c.students.includes(user.id));
+  const otherClasses = classes.filter((c) => !c.students.includes(user.id));
 
   async function checkIn(turma: Turma) {
-    setBusyId(turma._id);
+    setBusyId(turma.id);
     setFeedback(null);
     try {
       const pos = await getPosition();
       const res = await api<{ message: string }>('/api/checkin', {
         method: 'POST',
         body: JSON.stringify({
-          classId: turma._id,
+          classId: turma.id,
           latitude: pos.coords.latitude,
           longitude: pos.coords.longitude,
           accuracy: pos.coords.accuracy,
@@ -124,9 +124,9 @@ export default function AlunoDashboard() {
   }
 
   async function enroll(turma: Turma) {
-    setBusyId(turma._id);
+    setBusyId(turma.id);
     try {
-      await api(`/api/classes/${turma._id}/enroll`, { method: 'POST' });
+      await api(`/api/classes/${turma.id}/enroll`, { method: 'POST' });
       setFeedback({ kind: 'success', text: `Matriculado em ${turma.name}!` });
       load();
     } catch (e) {
@@ -227,7 +227,7 @@ export default function AlunoDashboard() {
                 const done = todayByClass.get(c.name);
                 return (
                   <li
-                    key={c._id}
+                    key={c.id}
                     className="flex flex-wrap items-center justify-between gap-4 px-6 py-4"
                   >
                     <div className="min-w-0">
@@ -248,8 +248,8 @@ export default function AlunoDashboard() {
                         </span>
                         <Button
                           variant="ghost"
-                          onClick={() => cancelCheckIn(done._id)}
-                          disabled={busyId === c._id}
+                          onClick={() => cancelCheckIn(done.id)}
+                          disabled={busyId === c.id}
                         >
                           Cancelar
                         </Button>
@@ -265,9 +265,9 @@ export default function AlunoDashboard() {
                     ) : (
                       <Button
                         onClick={() => checkIn(c)}
-                        disabled={busyId === c._id}
+                        disabled={busyId === c.id}
                       >
-                        {busyId === c._id ? '📍 Localizando…' : '📍 Fazer check-in'}
+                        {busyId === c.id ? '📍 Localizando…' : '📍 Fazer check-in'}
                       </Button>
                     )}
                   </li>
@@ -291,7 +291,7 @@ export default function AlunoDashboard() {
             <ul className="divide-y divide-zinc-200">
               {academies.map((a) => (
                 <li
-                  key={a._id}
+                  key={a.id}
                   className="flex flex-wrap items-center justify-between gap-4 px-6 py-4"
                 >
                   <div className="min-w-0">
@@ -301,7 +301,7 @@ export default function AlunoDashboard() {
                     </p>
                   </div>
                   <Link
-                    href={`/dashboard/academia/${a._id}`}
+                    href={`/dashboard/academia/${a.id}`}
                     className="rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-zinc-800 ring-1 ring-inset ring-zinc-300 transition hover:bg-zinc-50"
                   >
                     Ver turmas
@@ -327,7 +327,7 @@ export default function AlunoDashboard() {
                   !!c.maxStudents && c.students.length >= c.maxStudents;
                 return (
                   <li
-                    key={c._id}
+                    key={c.id}
                     className="flex flex-wrap items-center justify-between gap-4 px-6 py-4"
                   >
                     <div className="min-w-0">
@@ -344,7 +344,7 @@ export default function AlunoDashboard() {
                     <Button
                       variant="secondary"
                       onClick={() => enroll(c)}
-                      disabled={busyId === c._id || full}
+                      disabled={busyId === c.id || full}
                     >
                       {full ? 'Turma lotada' : 'Matricular'}
                     </Button>

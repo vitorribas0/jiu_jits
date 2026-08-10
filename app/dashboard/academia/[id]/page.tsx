@@ -65,9 +65,9 @@ export default function AcademiaDetalhe() {
   if (loading || !user) return <LoadingScreen />;
 
   async function toggleEnroll(turma: Turma, matriculado: boolean) {
-    setBusyId(turma._id);
+    setBusyId(turma.id);
     try {
-      await api(`/api/classes/${turma._id}/enroll`, {
+      await api(`/api/classes/${turma.id}/enroll`, {
         method: matriculado ? 'DELETE' : 'POST',
       });
       setFeedback({
@@ -129,15 +129,15 @@ export default function AcademiaDetalhe() {
           ) : (
             <ul className="grid gap-4 sm:grid-cols-2">
               {classes.map((c) => {
-                const matriculado = c.students.includes(user._id);
+                const matriculado = c.students.includes(user.id);
                 const lotada =
                   !!c.maxStudents && c.students.length >= c.maxStudents;
 
                 return (
-                  <li key={c._id}>
+                  <li key={c.id}>
                     <Card className="flex h-full flex-col overflow-hidden">
                       <ClassImage
-                        classId={c._id}
+                        classId={c.id}
                         image={c.image}
                         name={c.name}
                         className="h-32 w-full text-4xl"
@@ -181,7 +181,7 @@ export default function AcademiaDetalhe() {
                               variant={matriculado ? 'secondary' : 'primary'}
                               onClick={() => toggleEnroll(c, matriculado)}
                               disabled={
-                                busyId === c._id || (!matriculado && lotada)
+                                busyId === c.id || (!matriculado && lotada)
                               }
                             >
                               {matriculado
@@ -192,7 +192,7 @@ export default function AcademiaDetalhe() {
                             </Button>
                           ) : (
                             <Link
-                              href={`/dashboard/turma/${c._id}`}
+                              href={`/dashboard/turma/${c.id}`}
                               className="w-full rounded-lg bg-white px-4 py-2.5 text-center text-sm font-semibold text-zinc-800 ring-1 ring-inset ring-zinc-300 transition hover:bg-zinc-50"
                             >
                               Ver chamada

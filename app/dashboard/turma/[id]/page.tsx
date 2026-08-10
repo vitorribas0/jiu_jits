@@ -128,7 +128,7 @@ export default function TurmaDetalhe() {
 
       <div className="mb-8 flex flex-wrap items-start gap-5">
         <ClassImage
-          classId={turma._id}
+          classId={turma.id}
           image={turma.image}
           name={turma.name}
           className="h-24 w-24 shrink-0 rounded-xl text-3xl shadow-sm ring-1 ring-zinc-200"
@@ -143,7 +143,7 @@ export default function TurmaDetalhe() {
             👨‍🏫 {turma.professor?.name ?? '—'} ·{' '}
             {turma.academy ? (
               <Link
-                href={`/dashboard/academia/${turma.academy._id}`}
+                href={`/dashboard/academia/${turma.academy.id}`}
                 className="transition hover:text-indigo-600"
               >
                 🏠 {turma.academy.name}
@@ -215,7 +215,7 @@ export default function TurmaDetalhe() {
           ) : (
             <ul className="divide-y divide-zinc-200">
               {students.map((s) => (
-                <li key={s._id} className="flex items-stretch">
+                <li key={s.id} className="flex items-stretch">
                   {/* A cor da faixa desenha a hierarquia ao longo da lista */}
                   <span
                     aria-hidden
@@ -252,7 +252,7 @@ export default function TurmaDetalhe() {
         endpoint={agendaUrl}
         classDays={turma.days}
         canManage
-        turma={{ _id: turma._id, name: turma.name }}
+        turma={{ _id: turma.id, name: turma.name }}
         onChanged={() => {
           load();
           refresh();

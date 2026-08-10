@@ -375,7 +375,7 @@ export function TrainingCalendar({
                   {pendingToday.length > 0 && (
                     <Button
                       onClick={() =>
-                        decide(pendingToday.map((c) => c._id), 'aprovado')
+                        decide(pendingToday.map((c) => c.id), 'aprovado')
                       }
                       disabled={busy}
                     >
@@ -401,7 +401,7 @@ export function TrainingCalendar({
                   </h3>
                   <ul className="grid grid-cols-3 gap-2">
                     {selectedData.photos.map((p) => (
-                      <li key={p._id}>
+                      <li key={p.id}>
                         <button
                           onClick={() => setZoom(p)}
                           className="block w-full overflow-hidden rounded-lg ring-1 ring-zinc-200 transition hover:ring-2 hover:ring-indigo-500"
@@ -425,7 +425,7 @@ export function TrainingCalendar({
                   <ul className="divide-y divide-zinc-200 rounded-lg ring-1 ring-zinc-200">
                     {selectedData.checkIns.map((c) => (
                       <li
-                        key={c._id}
+                        key={c.id}
                         className="flex flex-wrap items-center justify-between gap-3 px-4 py-3"
                       >
                         <div className="min-w-0">
@@ -474,7 +474,7 @@ export function TrainingCalendar({
                           {canManage && c.approval !== 'aprovado' && (
                             <Button
                               variant="secondary"
-                              onClick={() => decide([c._id], 'aprovado')}
+                              onClick={() => decide([c.id], 'aprovado')}
                               disabled={busy}
                             >
                               Confirmar
@@ -483,7 +483,7 @@ export function TrainingCalendar({
                           {canManage && c.approval === 'pendente' && (
                             <Button
                               variant="ghost"
-                              onClick={() => decide([c._id], 'recusado')}
+                              onClick={() => decide([c.id], 'recusado')}
                               disabled={busy}
                             >
                               Recusar
@@ -492,7 +492,7 @@ export function TrainingCalendar({
                           {canManage && (
                             <Button
                               variant="ghost"
-                              onClick={() => cancel(c._id)}
+                              onClick={() => cancel(c.id)}
                               disabled={busy}
                             >
                               Cancelar
@@ -501,7 +501,7 @@ export function TrainingCalendar({
                           {personal && c.approval === 'pendente' && (
                             <Button
                               variant="ghost"
-                              onClick={() => cancel(c._id)}
+                              onClick={() => cancel(c.id)}
                               disabled={busy}
                             >
                               Cancelar meu check-in
@@ -522,7 +522,7 @@ export function TrainingCalendar({
         <UploadModal
           open={uploading}
           classes={[turma]}
-          presetClassId={turma._id}
+          presetClassId={turma.id}
           presetDate={selected}
           onClose={() => setUploading(false)}
           onDone={() => {
