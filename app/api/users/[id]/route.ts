@@ -77,7 +77,18 @@ export async function PATCH(req: NextRequest, { params }: Params) {
       );
     }
 
-    return NextResponse.json(user);
+    const transformed = {
+      ...user,
+      birthDate: user.birth_date,
+      beltUpdatedAt: user.belt_updated_at,
+      emergencyContact: user.emergency_contact,
+      createdAt: user.created_at,
+      updatedAt: user.updated_at,
+    };
+
+    const { birth_date, belt_updated_at, emergency_contact, created_at, updated_at, ...cleaned } = transformed;
+
+    return NextResponse.json(cleaned);
   } catch (err) {
     console.error('Erro ao atualizar usuário:', err);
     return NextResponse.json(

@@ -63,8 +63,19 @@ export async function GET(req: NextRequest) {
     pendingApprovals = count || 0;
   }
 
+  const transformedUser = {
+    ...user,
+    birthDate: user.birth_date,
+    beltUpdatedAt: user.belt_updated_at,
+    emergencyContact: user.emergency_contact,
+    createdAt: user.created_at,
+    updatedAt: user.updated_at,
+  };
+
+  const { birth_date, belt_updated_at, emergency_contact, created_at, updated_at, ...cleanedUser } = transformedUser;
+
   return NextResponse.json({
-    user,
+    user: cleanedUser,
     stats: {
       totalCheckIns: totalCheckIns || 0,
       monthCheckIns: monthCheckIns || 0,

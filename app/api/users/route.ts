@@ -25,5 +25,21 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Erro ao buscar usuários' }, { status: 500 });
   }
 
-  return NextResponse.json(data);
+  const transformed = (data || []).map((u: any) => ({
+    ...u,
+    birthDate: u.birth_date,
+    beltUpdatedAt: u.belt_updated_at,
+    emergencyContact: u.emergency_contact,
+    createdAt: u.created_at,
+    updatedAt: u.updated_at,
+    birth_date: undefined,
+    belt_updated_at: undefined,
+    emergency_contact: undefined,
+    created_at: undefined,
+    updated_at: undefined,
+  }));
+
+  const cleaned = transformed.map(({ birth_date, belt_updated_at, emergency_contact, created_at, updated_at, ...rest }) => rest);
+
+  return NextResponse.json(cleaned);
 }
