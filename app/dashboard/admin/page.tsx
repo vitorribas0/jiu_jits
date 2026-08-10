@@ -198,7 +198,7 @@ export default function AdminDashboard() {
       {tab === 'fotos' && (
         <PhotoGallery
           photos={photos}
-          classes={classes.map((c) => ({ _id: c.id, name: c.name }))}
+          classes={classes.map((c) => ({ id: c.id, name: c.name }))}
           canUpload
           canDelete={() => true}
           onChange={loadAll}

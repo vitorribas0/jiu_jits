@@ -22,8 +22,8 @@ export interface Foto {
   takenAt: string;
   url?: string;
   storage: 'cloudinary' | 'db';
-  uploadedBy: { _id: string; name: string } | null;
-  class: { _id: string; name: string } | null;
+  uploadedBy: { id: string; name: string } | null;
+  class: { id: string; name: string } | null;
 }
 
 interface TurmaRef {

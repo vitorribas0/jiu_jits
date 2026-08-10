@@ -39,7 +39,7 @@ interface Turma {
   maxStudents?: number;
   image?: ClassImageRef | null;
   professor: { name: string; belt: string; degree: number } | null;
-  academy: { _id: string; name: string; address: string } | null;
+  academy: { id: string; name: string; address: string } | null;
 }
 
 /** "hoje", "ontem", "há 3 dias" — mais legível que a data crua numa chamada. */
@@ -252,7 +252,7 @@ export default function TurmaDetalhe() {
         endpoint={agendaUrl}
         classDays={turma.days}
         canManage
-        turma={{ _id: turma.id, name: turma.name }}
+        turma={{ id: turma.id, name: turma.name }}
         onChanged={() => {
           load();
           refresh();

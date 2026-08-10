@@ -12,7 +12,7 @@ interface Registro {
   status: 'presente' | 'atrasado';
   approval: 'pendente' | 'aprovado' | 'recusado';
   /** Presente na visão da turma: quem bateu ponto. */
-  student?: { _id: string; name: string; belt: string; degree: number } | null;
+  student?: { id: string; name: string; belt: string; degree: number } | null;
   /** Presente na visão do aluno: em qual turma ele treinou. */
   class?: { name: string; startTime: string } | null;
 }
@@ -56,7 +56,7 @@ export function TrainingCalendar({
   /** Professor/admin da turma: libera confirmar presença e enviar foto. */
   canManage?: boolean;
   /** Turma a que o calendário pertence, necessária para enviar a foto. */
-  turma?: { _id: string; name: string };
+  turma?: { id: string; name: string };
   /** Avisa a página para recarregar contadores após aprovar ou enviar foto. */
   onChanged?: () => void;
 }) {

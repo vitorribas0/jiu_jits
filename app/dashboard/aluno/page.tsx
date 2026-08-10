@@ -30,8 +30,8 @@ interface Turma {
   endTime: string;
   maxStudents?: number;
   students: string[];
-  professor: { _id: string; name: string; belt: string; degree: number } | null;
-  academy: { _id: string; name: string; address: string } | null;
+  professor: { id: string; name: string; belt: string; degree: number } | null;
+  academy: { id: string; name: string; address: string } | null;
 }
 
 interface Registro {
@@ -48,7 +48,7 @@ export default function AlunoDashboard() {
   const [classes, setClasses] = useState<Turma[]>([]);
   const [history, setHistory] = useState<Registro[]>([]);
   const [photos, setPhotos] = useState<Foto[]>([]);
-  const [academies, setAcademies] = useState<{ _id: string; name: string; address: string }[]>([]);
+  const [academies, setAcademies] = useState<{ id: string; name: string; address: string }[]>([]);
   const [busyId, setBusyId] = useState<string | null>(null);
   const [section, setSection] = useState('treino');
   const [feedback, setFeedback] = useState<{
@@ -67,7 +67,7 @@ export default function AlunoDashboard() {
         api<Turma[]>('/api/classes'),
         api<Registro[]>('/api/checkin'),
         api<Foto[]>('/api/photos'),
-        api<{ _id: string; name: string; address: string }[]>('/api/academies'),
+        api<{ id: string; name: string; address: string }[]>('/api/academies'),
       ]);
       setClasses(c);
       setHistory(h);

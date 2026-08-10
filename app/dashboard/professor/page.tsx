@@ -60,8 +60,8 @@ interface Registro {
   checkInTime: string;
   distanceMeters: number;
   status: 'presente' | 'atrasado';
-  student: { _id: string; name: string; belt: string; degree: number } | null;
-  class: { _id: string; name: string } | null;
+  student: { id: string; name: string; belt: string; degree: number } | null;
+  class: { id: string; name: string } | null;
 }
 
 export default function ProfessorDashboard() {
@@ -253,7 +253,7 @@ export default function ProfessorDashboard() {
       <div className="mb-8">
         <PhotoGallery
           photos={photos}
-          classes={classes.map((c) => ({ _id: c.id, name: c.name }))}
+          classes={classes.map((c) => ({ id: c.id, name: c.name }))}
           canUpload
           canDelete={(p) => p.uploadedBy?.id === user.id}
           onChange={load}
